@@ -1,4 +1,5 @@
 import { useWeatherData } from "../../hooks/useWeatherData";
+import WeatherIcon from "../WeatherIcon";
 import Card from "./Card";
 import { Coords } from "../../types";
 import { useLanguage } from "../LanguageProvider";
@@ -23,11 +24,7 @@ export default function HourlyForecast({ coords }: Props) {
                 data?.hourly.slice(0, 48).map(hour => (
                     <div key={hour.dt} className="flex flex-col items-center gap-2 min-w-[76px]">
                         <p className="text-muted-foreground whitespace-nowrap text-sm font-medium">{getHour(hour.dt)}</p>
-                        <img
-                            src={`https://openweathermap.org/img/wn/${hour.weather[0].icon}.png`}
-                            alt={hour.weather[0].description}
-                            className="w-10 h-10"
-                        />
+                        <WeatherIcon code={hour.weather[0].icon} title={hour.weather[0].description} className="w-10 h-10" />
                         <p className="font-semibold text-base">{convertTemp(hour.temp)}{unitSymbol}</p>
                     </div>
                 ))

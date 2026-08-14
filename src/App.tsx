@@ -25,15 +25,7 @@ function Footer() {
       <p>{t('app.footer').replace('{year}', new Date().getFullYear().toString())}</p>
       <p className="opacity-50 italic">{t('app.poweredBy')}</p>
 
-      {/* إعلان AdSense */}
-      <ins
-        className="adsbygoogle"
-        style={{ display: "block", marginTop: "10px" }}
-        data-ad-client="ca-pub-1438591552666134"
-        data-ad-slot="2090374347"
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      ></ins>
+
     </footer>
   );
 }

@@ -2,6 +2,7 @@ import { useWeatherData } from "../../hooks/useWeatherData";
 import Card from "./Card";
 import { Coords } from "../../types";
 import { Droplets, Wind, Thermometer, Clock } from "lucide-react";
+import WeatherIcon from "../WeatherIcon";
 import { useLanguage } from "../LanguageProvider";
 import { useUnit } from "../UnitProvider";
 
@@ -36,9 +37,9 @@ export default function CurrentWeather({ coords }: Props) {
 
         <div className="flex flex-col items-center gap-2">
           <div className="p-2 sm:p-3 rounded-full bg-primary/10 border border-primary/20 shadow-inner">
-            <img
-              src={`https://openweathermap.org/img/wn/${data?.current.weather[0].icon}@2x.png`}
-              alt={data?.current.weather[0].description}
+            <WeatherIcon
+              code={data?.current.weather[0].icon}
+              title={data?.current.weather[0].description}
               className="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-sm"
             />
           </div>

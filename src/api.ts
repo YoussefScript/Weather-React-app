@@ -8,6 +8,12 @@ export async function getWeather(lat: string, lon: string, lang: string = 'en') 
   );
   const currentData = await currentRes.json();
 
+  if (!currentRes.ok || !currentData || !currentData.main) {
+    // Provide a helpful error for debugging instead of failing with undefined accesses
+    console.error('getWeather: unexpected current weather response', { status: currentRes.status, body: currentData });
+    throw new Error(`Failed to fetch current weather: ${currentRes.status} ${currentRes.statusText}`);
+  }
+
   const current = {
     dt: currentData.dt,
     temp: currentData.main.temp,
@@ -30,9 +36,20 @@ export async function getWeather(lat: string, lon: string, lang: string = 'en') 
   );
   const forecastData = await forecastRes.json();
 
+  if (!forecastRes.ok || !forecastData || !Array.isArray(forecastData.list)) {
+    console.error('getWeather: unexpected forecast response', { status: forecastRes.status, body: forecastData });
+    throw new Error(`Failed to fetch forecast: ${forecastRes.status} ${forecastRes.statusText}`);
+  }
+
   // Transform forecast.list into hourly (interpolating 3-hour data to 1-hour)
   const hourly: any[] = [];
   const list = forecastData.list;
+
+  if (!list || list.length === 0) {
+    // If no forecast list is provided, return a minimal structure with current data only
+    const finalData = { current, hourly: [], daily: [] };
+    return oneCallLikeSchema.parse(finalData);
+  }
 
   for (let i = 0; i < list.length - 1; i++) {
     const start = list[i];

@@ -1,4 +1,5 @@
 import { useWeatherData } from "../../hooks/useWeatherData";
+import WeatherIcon from "../WeatherIcon";
 import Card from "./Card";
 import { Coords } from "../../types";
 import { useLanguage } from "../LanguageProvider";
@@ -30,11 +31,7 @@ export default function DailyForecast({ coords }: Props) {
         <div key={day.dt} className="grid grid-cols-5 min-w-[320px] items-center text-center text-xs sm:text-sm">
           <p className="text-left font-medium">{getDayName(day.dt)}</p>
           <div className="flex justify-center">
-            <img
-              src={`https://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
-              alt={day.weather[0].description}
-              className="w-6 h-6 sm:w-7 sm:h-7 object-contain"
-            />
+            <WeatherIcon code={day.weather[0].icon} title={day.weather[0].description} className="w-6 h-6 sm:w-7 sm:h-7" />
           </div>
           <p className="font-medium">{convertTemp(day.temp.max)}{unitSymbol}</p>
           <p className="text-muted-foreground font-medium">{convertTemp(day.temp.min)}{unitSymbol}</p>
